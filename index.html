@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<title>Live Data - 2h Running of Indy 250</title>
+<title>Live Data - 2h Running of Indy 250 - FAST 6</title>
 
 <style>
 :root {
@@ -80,7 +80,7 @@ td.avg { font-weight: bold; color: var(--highlight); }
 <body>
 
 <header>
-  <h1>Live Data - 2h Running of Indy 250</h1>
+  <h1>Live Data - 2h Running of Indy 250 - FAST 6</h1>
 </header>
 
 <div class="table-wrap">
@@ -104,42 +104,12 @@ td.avg { font-weight: bold; color: var(--highlight); }
 
 <script>
 const dados = [
-  { car: 1, pilot: "Ranniel Pereira", team: "RP Motorsports Honda", laps: ["","","",""] },
-  { car: 44, pilot: "Celso Silva", team: "RP Motorsports Honda", laps: ["","","",""] },
   { car: 28, pilot: "Otavio Marinho", team: "RP Motorsports Honda", laps: ["","","",""] },
-  { car: 2, pilot: "Luiz Costa", team: "Korecingue Racing Division", laps: ["","","",""] },
-  { car: 12, pilot: "Julio", team: "Korecingue Racing Division", laps: ["","","",""] },
-  { car: 21, pilot: "rb", team: "Korecingue Racing Division", laps: ["","","",""] },
-  { car: 69, pilot: "Luiz Henrique", team: "Sempher FlyTeam Project", laps: ["","","",""] },
-  { car: 87, pilot: "Vitor Freitas", team: "Sempher FlyTeam Project", laps: ["","","",""] },
-  { car: 10, pilot: "Luiz Milton", team: "Sempher FlyTeam Project", laps: ["","","",""] },
-  { car: 19, pilot: "Eduardo Bermúdez", team: "Neon Genesis by SRT", laps: ["","","",""] },
   { car: 45, pilot: "Isac Nilton", team: "Mendonca Racing Team", laps: ["","","",""] },
-  { car: 37, pilot: "Vitor Borges", team: "Mendonca Racing Team", laps: ["","","",""] },
   { car: 06, pilot: "Theo Torres", team: "Mendonca Racing Team", laps: ["","","",""] },
-  { car: 40, pilot: "Lucas Taraciuk", team: "Need For Speed Racing", laps: ["","","",""] },
+  { car: 40, pilot: "Lucas Taraciuk", team: "Need For Speed Racing", laps: ["","","",""]] },
   { car: 33, pilot: "Nicolas Morais", team: "Need For Speed Racing", laps: ["","","",""] },
-  { car: 25, pilot: "Skyline", team: "Need For Speed Racing", laps: ["","","",""] },
-  { car: 15, pilot: "José Vinicius", team: "Scuderia GZV Simracing", laps: ["","","",""] },
-  { car: 46, pilot: "Jhony Feitosa", team: "Eurofarma Racing Powered by RedBull", laps: ["","","",""] },
-  { car: 99, pilot: "Diogo Silva", team: "Honda Minardi", laps: ["","","",""] },
-  { car: 77, pilot: "Renan Farias", team: "Honda Minardi", laps: ["","","",""] },
-  { car: 43, pilot: "Juan Pablo Espinosa", team: "Honda Minardi", laps: ["","","",""] },
-  { car: 47, pilot: "Shuz", team: "Dallara Program Racing Team", laps: ["","","",""] },
-  { car: 41, pilot: "YQ141", team: "Dallara Program Racing Team", laps: ["","","",""] },
   { car: 07, pilot: "Tiago Souza", team: "Dallara Program Racing Team", laps: ["","","",""] },
-  { car: 30, pilot: "Dani Siesta", team: "Vhoung JER Team", laps: ["","","",""] },
-  { car: 14, pilot: "Perez", team: "Vhoung JER Team", laps: ["","","",""] },
-  { car: 97, pilot: "Eduardo Mendonça", team: "SGTV Motorsport Team", laps: ["","","",""] },
-  { car: 20, pilot: "Antonio de Lara", team: "SGTV Motorsport Team", laps: ["","","",""] },
-  { car: 29, pilot: "Vicente", team: "SGTV Motorsport Team", laps: ["","","",""] },
-  { car: 17, pilot: "Santsx", team: "NAMCO racing team", laps: ["","","",""] },
-  { car: 81, pilot: "Joao Amorim", team: "Amorim Racing Team", laps: ["","","",""] },
-  { car: 18, pilot: "Kudoeste", team: "Lauda Motorsports", laps: ["","","",""] },
-  { car: 34, pilot: "Dirkson", team: "Lauda Motorsports", laps: ["","","",""] },
-  { car: 91, pilot: "Sudriano", team: "Eog Motorsport", laps: ["","","",""] },
-  { car: 64, pilot: "Balde", team: "Eog Motorsport", laps: ["","","",""] },
-  { car: 16, pilot: "Vitor França", team: "Arrows Eagle Union", laps: ["","","",""] }
 ];
 
 function toSeconds(t) {
