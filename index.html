@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Live Data - 2h Running of Indy 250</title>
+
+<style>
+:root {
+  --bg: #0c0c0c;
+  --row: #141414;
+  --row-hover: #1d1d1d;
+  --header: #101010;
+  --border: #2a2a2a;
+  --red: #c40000;
+  --text: #e6e6e6;
+  --muted: #a0a0a0;
+  --highlight: #ffd700;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+}
+
+header {
+  background: var(--header);
+  border-bottom: 3px solid var(--red);
+  padding: 14px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+thead th {
+  background: var(--header);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr {
+  background: var(--row);
+  transition: background 0.15s;
+}
+
+tbody tr:hover { background: var(--row-hover); }
+
+td {
+  padding: 10px 6px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  white-space: nowrap;
+}
+
+td.left { text-align: left; }
+td.pos { font-weight: bold; }
+td.avg { font-weight: bold; color: var(--highlight); }
+.car { color: var(--muted); }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Live Data - 2h Running of Indy 250</h1>
+</header>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>P</th>
+      <th>N</th>
+      <th>NOME</th>
+      <th>EQUIPE</th>
+      <th>VOLTA 1</th>
+      <th>VOLTA 2</th>
+      <th>VOLTA 3</th>
+      <th>VOLTA 4</th>
+      <th>MÉDIA FINAL</th>
+    </tr>
+  </thead>
+  <tbody id="grid"></tbody>
+</table>
+</div>
+
+<script>
+const dados = [
+  { car: 1, pilot: "Ranniel Pereira", team: "RP Motorsports Honda", laps: ["","","",""] },
+  { car: 44, pilot: "Celso Silva", team: "RP Motorsports Honda", laps: ["","","",""] },
+  { car: 28, pilot: "Otavio Marinho", team: "RP Motorsports Honda", laps: ["","","",""] },
+  { car: 2, pilot: "Luiz Costa", team: "Korecingue Racing Division", laps: ["","","",""] },
+  { car: 12, pilot: "Julio", team: "Korecingue Racing Division", laps: ["","","",""] },
+  { car: 21, pilot: "rb", team: "Korecingue Racing Division", laps: ["","","",""] },
+  { car: 69, pilot: "Luiz Henrique", team: "Sempher FlyTeam Project", laps: ["","","",""] },
+  { car: 87, pilot: "Vitor Freitas", team: "Sempher FlyTeam Project", laps: ["","","",""] },
+  { car: 10, pilot: "Luiz Milton", team: "Sempher FlyTeam Project", laps: ["","","",""] },
+  { car: 19, pilot: "Eduardo Bermúdez", team: "Neon Genesis by SRT", laps: ["","","",""] },
+  { car: 45, pilot: "Isac Nilton", team: "Mendonca Racing Team", laps: ["","","",""] },
+  { car: 37, pilot: "Vitor Borges", team: "Mendonca Racing Team", laps: ["","","",""] },
+  { car: 06, pilot: "Theo Torres", team: "Mendonca Racing Team", laps: ["","","",""] },
+  { car: 40, pilot: "Lucas Taraciuk", team: "Need For Speed Racing", laps: ["","","",""] },
+  { car: 33, pilot: "Nicolas Morais", team: "Need For Speed Racing", laps: ["","","",""] },
+  { car: 25, pilot: "Skyline", team: "Need For Speed Racing", laps: ["","","",""] },
+  { car: 15, pilot: "José Vinicius", team: "Scuderia GZV Simracing", laps: ["","","",""] },
+  { car: 46, pilot: "Jhony Feitosa", team: "Eurofarma Racing Powered by RedBull", laps: ["","","",""] },
+  { car: 99, pilot: "Diogo Silva", team: "Honda Minardi", laps: ["","","",""] },
+  { car: 77, pilot: "Renan Farias", team: "Honda Minardi", laps: ["","","",""] },
+  { car: 43, pilot: "Juan Pablo Espinosa", team: "Honda Minardi", laps: ["","","",""] },
+  { car: 47, pilot: "Shuz", team: "Dallara Program Racing Team", laps: ["","","",""] },
+  { car: 41, pilot: "YQ141", team: "Dallara Program Racing Team", laps: ["","","",""] },
+  { car: 07, pilot: "Tiago Souza", team: "Dallara Program Racing Team", laps: ["","","",""] },
+  { car: 30, pilot: "Dani Siesta", team: "Vhoung JER Team", laps: ["","","",""] },
+  { car: 14, pilot: "Perez", team: "Vhoung JER Team", laps: ["","","",""] },
+  { car: 97, pilot: "Eduardo Mendonça", team: "SGTV Motorsport Team", laps: ["","","",""] },
+  { car: 20, pilot: "Antonio de Lara", team: "SGTV Motorsport Team", laps: ["","","",""] },
+  { car: 29, pilot: "Vicente", team: "SGTV Motorsport Team", laps: ["","","",""] },
+  { car: 17, pilot: "Santsx", team: "NAMCO racing team", laps: ["","","",""] },
+  { car: 81, pilot: "Joao Amorim", team: "Amorim Racing Team", laps: ["","","",""] },
+  { car: 18, pilot: "Kudoeste", team: "Lauda Motorsports", laps: ["","","",""] },
+  { car: 34, pilot: "Dirkson", team: "Lauda Motorsports", laps: ["","","",""] },
+  { car: 91, pilot: "Sudriano", team: "Eog Motorsport", laps: ["","","",""] },
+  { car: 64, pilot: "Balde", team: "Eog Motorsport", laps: ["","","",""] },
+  { car: 16, pilot: "Vitor França", team: "Arrows Eagle Union", laps: ["","","",""] }
+];
+
+function toSeconds(t) {
+  if (!t) return null;
+  const [m, s] = t.split(":");
+  return (+m * 60) + parseFloat(s.replace(",", "."));
+}
+
+function fromSeconds(sec) {
+  const m = Math.floor(sec / 60);
+  const r = (sec % 60).toFixed(3);
+  return String(m).padStart(2, "0") + ":" + r.padStart(6, "0");
+}
+
+// calcular médias
+dados.forEach(d => {
+  const tempos = d.laps.map(toSeconds).filter(t => t !== null);
+  if (tempos.length === 4) {
+    d.avgSeconds = tempos.reduce((a,b)=>a+b,0) / 4;
+    d.avgFormatted = fromSeconds(d.avgSeconds);
+  } else {
+    d.avgSeconds = null;
+    d.avgFormatted = "--";
+  }
+});
+
+// ordenar por média
+dados.sort((a,b)=>{
+  if (a.avgSeconds === null) return 1;
+  if (b.avgSeconds === null) return -1;
+  return a.avgSeconds - b.avgSeconds;
+});
+
+// renderizar
+const tbody = document.getElementById("grid");
+tbody.innerHTML = "";
+
+dados.forEach((d,i)=>{
+  tbody.innerHTML += `
+    <tr>
+      <td class="pos">${i+1}</td>
+      <td class="car">${d.car}</td>
+      <td class="left">${d.pilot}</td>
+      <td class="left">${d.team}</td>
+      ${d.laps.map(l=>`<td>${l || "--"}</td>`).join("")}
+      <td class="avg">${d.avgFormatted}</td>
+    </tr>
+  `;
+});
+</script>
+
+</body>
+</html>
+
